@@ -1,5 +1,6 @@
 use cfg_if::cfg_if;
 use leptos::*;
+use leptos_meta::*;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
 
@@ -92,6 +93,8 @@ pub fn TodoApp(cx: Scope) -> Element {
     view! {
         cx,
         <div>
+            <Title text="Leptos Heavy Metal Stack"/>
+            <Meta name="description" content="A Leptos fan site."/>
             <Router>
                 <header>
                     <h1>"My Tasks"</h1>
