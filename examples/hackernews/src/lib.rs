@@ -16,7 +16,7 @@ pub fn App(cx: Scope) -> Element {
     view! {
         cx,
         <div>
-            <Stylesheet href="/static/style.css"/>
+            <Stylesheet href="/style.css"/>
             <Meta name="description" content="Leptos implementation of a HackerNews demo."/>
             <Router>
                 <Nav />
@@ -38,7 +38,7 @@ cfg_if! {
         use wasm_bindgen::prelude::wasm_bindgen;
 
         #[wasm_bindgen]
-        pub fn main() {
+        pub fn hydrate() {
             _ = console_log::init_with_level(log::Level::Debug);
             console_error_panic_hook::set_once();
             leptos::hydrate(body().unwrap(), move |cx| {
