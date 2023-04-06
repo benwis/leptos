@@ -1143,10 +1143,12 @@ impl LeptosRoutes for axum::Router {
 }
 
 fn get_leptos_pool() -> LocalPoolHandle {
+    use std::thread;
     static LOCAL_POOL: OnceLock<LocalPoolHandle> = OnceLock::new();
     LOCAL_POOL
         .get_or_init(|| {
-            let pool = tokio_util::task::LocalPoolHandle::new(1);
+            let parallelism = thread::available_parallelism().unwrap().get();
+            let pool = tokio_util::task::LocalPoolHandle::new(parallelism);
             pool
         })
         .clone()
