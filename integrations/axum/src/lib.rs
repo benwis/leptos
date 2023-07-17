@@ -966,7 +966,7 @@ where
                 let local_pool = get_leptos_pool();
                 local_pool.spawn_pinned(move || {
                     async move {
-                        println!("Spawn Pinned 4")
+                        println!("Spawn Pinned 4");
                         let app = {
                             let full_path = full_path.clone();
                             let (req, req_parts) = generate_request_and_parts(req).await;
