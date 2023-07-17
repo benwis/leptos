@@ -238,6 +238,7 @@ async fn handle_server_fns_inner(
     let pool_handle = get_leptos_pool();
     pool_handle.spawn_pinned(move || {
         async move {
+            println!("Spawn Pinned");
             let res = if let Some(server_fn) =
                 server_fn_by_path(fn_name.as_str())
             {
@@ -609,6 +610,7 @@ where
 
             let current_span = tracing::Span::current();
             local_pool.spawn_pinned(move || async move {
+                println!("Spawn Pinned 2");
                 let app = {
                     // Need to get the path and query string of the Request
                     // For reasons that escape me, if the incoming URI protocol is https, it provides the absolute URI
@@ -786,6 +788,7 @@ where
                 let local_pool = get_leptos_pool();
                 let current_span = tracing::Span::current();
                 local_pool.spawn_pinned(|| async move {
+                    println!("Spawn pinned 3");
                     let app = {
                         let full_path = full_path.clone();
                         let (req, req_parts) = generate_request_and_parts(req).await;
@@ -963,6 +966,7 @@ where
                 let local_pool = get_leptos_pool();
                 local_pool.spawn_pinned(move || {
                     async move {
+                        println!("Spawn Pinned 4")
                         let app = {
                             let full_path = full_path.clone();
                             let (req, req_parts) = generate_request_and_parts(req).await;
@@ -1050,6 +1054,7 @@ where
     local
         .run_until(async move {
             tokio::task::spawn_local(async move {
+                println!("Spawn Pinned 5");
                 let routes = leptos_router::generate_route_list_inner(app_fn);
                 let mut writable = routes_inner.0.write();
                 *writable = routes;
