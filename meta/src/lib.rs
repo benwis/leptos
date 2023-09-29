@@ -120,7 +120,7 @@ impl MetaTagsContext {
             .borrow()
             .iter()
             .map(|(_, (builder_el, _))| {
-                builder_el.clone().into_view().render_to_string()
+                format!("{}\n",builder_el.clone().into_view().render_to_string())
             })
             .collect()
     }
@@ -272,7 +272,9 @@ impl MetaContext {
             tags.push_str("<title>");
             tags.push_str(&title);
             tags.push_str("</title>");
+            tags.push_str("\n")
         }
+
         tags.push_str(&self.tags.as_string());
 
         if let Some(prev_key) = prev_key {
