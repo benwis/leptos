@@ -758,7 +758,6 @@ async fn generate_response(
     rx: Receiver<String>,
 ) -> Response<StreamBody<PinnedHtmlStream>> {
     let mut stream = Box::pin(rx.map(|html| Ok(Bytes::from(html))));
-    println!("GENERATE RESPONSE");
 
     // Get the first and second chunks in the stream, which renders the app shell, and thus allows Resources to run
     let first_chunk = stream.next().await;
@@ -1118,16 +1117,19 @@ where
                 if let Some(status) = res_options.status {
                     *res.status_mut() = status
                 }
+                let headers = res.headers_mut();
                 let mut res_headers = res_options.headers.clone();
-                res.headers_mut().extend(res_headers.drain());
+
+                headers.extend(res_headers.drain());
 
                 // This one doesn't use generate_response(), so we need to do this seperately
-                if !res_headers.contains_key(http::header::CONTENT_TYPE) {
+                if !headers.contains_key(http::header::CONTENT_TYPE) {
                     // Set the Content Type headers on all responses. This makes Firefox show the page source
                     // without complaining
-                    res_headers.insert(
+                    headers.insert(
                         http::header::CONTENT_TYPE,
-                        HeaderValue::from_str("text/html; charset=utf-8").unwrap(),
+                        HeaderValue::from_str("text/html; charset=utf-8")
+                            .unwrap(),
                     );
                 }
 

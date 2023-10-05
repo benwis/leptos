@@ -120,7 +120,10 @@ impl MetaTagsContext {
             .borrow()
             .iter()
             .map(|(_, (builder_el, _))| {
-                format!("{}\n",builder_el.clone().into_view().render_to_string())
+                format!(
+                    "{}\n",
+                    builder_el.clone().into_view().render_to_string()
+                )
             })
             .collect()
     }
