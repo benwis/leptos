@@ -123,7 +123,7 @@ pub use generate::*;
 mod generate {
     use super::Nonce;
     use base64::{
-        alphabet,
+        alphabet::Alphabet,
         engine::{self, general_purpose},
         Engine,
     };
@@ -131,7 +131,12 @@ mod generate {
     use rand::{thread_rng, RngCore};
 
     const NONCE_ENGINE: engine::GeneralPurpose = engine::GeneralPurpose::new(
-        &alphabet::URL_SAFE,
+        match &Alphabet::new(
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-",
+        ) {
+            Ok(l) => l,
+            Err(_) => panic!("Failed to create alphabet"),
+        },
         general_purpose::NO_PAD,
     );
 
